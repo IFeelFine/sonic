@@ -1,0 +1,28 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kubeconfig-secrets
+type: Opaque
+data:
+  server: your_server_url
+  cluster: your_cluster_name
+  ocid: your_ocid
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: your-pod
+spec:
+  containers:
+  - name: your-container
+    image: your-image
+    volumeMounts:
+    - name: kubeconfig-secrets
+      mountPath: /mnt/secrets
+    # your other container configurations
+  volumes:
+  - name: kubeconfig-secrets
+    secret:
+      secretName: kubeconfig-secrets
